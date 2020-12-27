@@ -9,7 +9,7 @@ import numpy as np
 plot_type = "cmap"; subplot = 0; var = 'u' #CHANGE THIS!!!
 sub_arr = np.array([],dtype = np.int); type_arr = np.array([]); types = {};old_sub_arr = {'':''};old_type_arr={}
 
-for key in old_sub_arr.copy():
+for key in old_sub_arr.copy(): #Prevented it from running through if after elif
     if str(subplot) not in key and str(subplot) in str(sub_arr): #'0' not in '[]' and '0' in '[0 0]'
         print("if")
         old_key_store = str(sub_arr) #'[0 0]'
@@ -21,15 +21,23 @@ for key in old_sub_arr.copy():
         print("type_arr: {}".format(type_arr))
         types[str(new_key_store)] = type_arr
         print("types: {}".format(types))
-    elif str(subplot) not in key and str(subplot) not in str(sub_arr): #'1' not in '[]' and '1' not in '[0 0]'
+        break #Prevents it from running through if multiple times
+    elif str(subplot) not in key and str(subplot) not in str(sub_arr): #'1' not in '' and '1' not in '[]' KEEPS RUNNING THROUGH HERE WHEN GOING BACK
         print("elif")
-        old_sub_arr[str(sub_arr)] = sub_arr #self.old_sub_arr = {'[0 0]': [0 0]}
+        if len(sub_arr) > 0:
+            old_sub_arr[str(sub_arr)] = sub_arr #self.old_sub_arr = {'[0 0]': [0 0]}
+        else:
+            pass
         sub_arr = np.array([], dtype = np.int)
         sub_arr = np.append(sub_arr, subplot)
-        old_type_arr[str(type_arr)] = type_arr
+        if len(type_arr) > 0:
+            old_type_arr[str(type_arr)] = type_arr
+        else:
+            pass
         type_arr = np.array([])
         type_arr = np.append(type_arr, {var:plot_type})
         types[str(sub_arr)] = type_arr
+        break #This prevents it from running through if
     else: #HAS TO RUN THROUGH THIS IF we go back from subplot = 1 to subplot = 0
         print("else")
         old_key_store = key #old_key = '[0 0]' We can refer to and pop this key in self.types
@@ -39,6 +47,7 @@ for key in old_sub_arr.copy():
         new_types_arr = types[new_key_store]
         new_types_arr = np.append(new_types_arr, {var:plot_type})
         types[new_key_store] = new_types_arr
+
 
 print("old_sub_arr: {}".format(old_sub_arr))
 print("old_type_arr: {}".format(old_type_arr))
