@@ -100,7 +100,8 @@ def buildmap_and_subplots(projection,urcrnrlat,llcrnrlat,urcrnrlon,llcrnrlon,r,l
 	#TODO ask if data is projected correctly. If it isn't: ax.set_extent(same,same, same + deviation, same + deviation)
 	new_ax = plt.axes(projection = ccrs.PlateCarree())
 	new_ax.set_extent([llcrnrlon+.0001, urcrnrlon+.0001, llcrnrlat, urcrnrlat])
-	subplots = IntVar()
+	subplots = IntVar();T = Text(root, height = 3, width = 60);T.pack();T.insert(END, "Enter how many subplots you would like in your plot. Enter 1 if you just want a solitary plot.")
+
 	number = Entry(root, width = 15, textvariable = subplots)
 	number.pack()
 
